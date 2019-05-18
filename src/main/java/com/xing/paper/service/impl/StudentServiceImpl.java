@@ -1,12 +1,15 @@
 package com.xing.paper.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 
+import com.xing.paper.service.HttpAPIService;
 import com.xing.paper.utils.DoSend;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xing.paper.dao.StudentDao;
@@ -21,6 +24,8 @@ public class StudentServiceImpl implements StudentService{
 	private static Logger log = Logger.getLogger(StudentServiceImpl.class);
 	@Resource
 	private StudentDao studentDao;
+	@Autowired
+	private HttpAPIService httpAPIService;
 
 	@Override
 	public List<StudentPo> getAllStudent() {
@@ -57,7 +62,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public void savePaper(PaperPO paper) {
+	public void savePaper(PaperPO paper, File file) throws Exception{
+		httpAPIService.doUpload("http://127.0.0.1:8012/fileUpload",file);
 		studentDao.savePaper(paper);
 	}
 

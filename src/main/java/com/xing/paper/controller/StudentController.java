@@ -154,6 +154,7 @@ public class StudentController {
 		po.setPaper_flag(t_flag);
 		request.setAttribute("student", po);
 		request.setAttribute("papers", pos);
+		request.setAttribute("baseUrl", "http://127.0.0.1:8012/");
 		return "student/student-paper";
 	}
 	

@@ -248,7 +248,8 @@ public class StudentDaoImpl implements StudentDao {
 
 	@Override
 	public void savePaper(PaperPO paper) {
-		String sql = "INSERT INTO tb_paper(paper_content,f_teacher_number,f_student_number,paper_status,posted_time) VALUES (?,?,?,?,?);";
+		String sql = "INSERT INTO tb_paper(paper_content,f_teacher_number,f_student_number,paper_status,posted_time," +
+				"uu_file_name,file_name) VALUES (?,?,?,?,?,?,?);";
 		Connection connection = null;
 		try {
 			connection = basicDataSource.getConnection();
@@ -261,7 +262,8 @@ public class StudentDaoImpl implements StudentDao {
 			//statement.setDate(5, new Date(paper.getPosted_time().getTime()));
 			SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			statement.setString(5,fmt.format(paper.getPosted_time()));
-
+			statement.setString(6, paper.getUu_file_name());
+			statement.setString(7, paper.getFile_name());
 			int i = statement.executeUpdate();
 			logger.info("向论文表插入" + i + "条成功数据");
 			connection.close();
@@ -281,7 +283,7 @@ public class StudentDaoImpl implements StudentDao {
 	public List<PaperPO> getPaperByStudentNumber(String studentNumber, Integer paperId) {
 		List<PaperPO> res = new ArrayList<PaperPO>();
 		String sql = "select pa.f_student_number,pa.f_teacher_number,pa.id,pa.paper_content,"
-				+ " pa.paper_status ,pa.comment " + " from tb_paper pa ";
+				+ " pa.paper_status ,pa.comment ,pa.file_name,pa.uu_file_name,pa.posted_time" + " from tb_paper pa ";
 
 		if (StringUtils.isNoneBlank(studentNumber)) {
 			sql += " where pa.f_student_number = ? ";
@@ -310,6 +312,9 @@ public class StudentDaoImpl implements StudentDao {
 				po.setPaper_content(result.getString("paper_content"));
 				po.setPaper_status(result.getInt("paper_status"));
 				po.setComment(result.getString("comment"));
+				po.setUu_file_name(result.getString("uu_file_name"));
+				po.setFile_name(result.getString("file_name"));
+				po.setPosted_time(result.getDate("posted_time"));
 				res.add(po);
 			}
 			connection.close();

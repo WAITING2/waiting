@@ -14,6 +14,8 @@ public class PaperPO {
 	private TeacherPo teacher;
 	private StudentPo student;
 	private Date posted_time;
+	private String file_name;//文件名称
+	private String uu_file_name;//uuid值
 	public Integer getId() {
 		return id;
 	}
@@ -75,5 +77,21 @@ public class PaperPO {
 
 	public void setPosted_time(Date posted_time) {
 		this.posted_time = posted_time;
+	}
+
+	public String getFile_name() {
+		return file_name;
+	}
+
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+
+	public String getUu_file_name() {
+		return uu_file_name;
+	}
+
+	public void setUu_file_name(String uu_file_name) {
+		this.uu_file_name = uu_file_name;
 	}
 }

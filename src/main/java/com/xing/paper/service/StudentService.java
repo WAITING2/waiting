@@ -1,5 +1,6 @@
 package com.xing.paper.service;
 
+import java.io.File;
 import java.util.List;
 
 import com.xing.paper.po.PaperPO;
@@ -14,7 +15,7 @@ public interface StudentService {
 	public List<StudentPo> getAllStudent();
 	public StudentPo getStudentByNumber(String studentNumber);
 	public boolean comfirmLogin(String username,String password);
-	public void savePaper(PaperPO paper);
+	public void savePaper(PaperPO paper, File file)throws Exception;
 	public List<PaperPO> getPaperByStudentNumber(String studentNumber, Integer paperId);
 	public void updatePaper(PaperPO po, StudentPo studentPo);
 	public List<PaperPO> getFailPaperByStudentNumber(String studentNumber);

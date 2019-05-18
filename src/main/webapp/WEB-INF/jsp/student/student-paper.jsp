@@ -50,7 +50,9 @@ function doUpload() {
         }  
    });  
 }
-
+function goPreview(item) {
+    window.open( '${baseUrl}onlinePreview?url='+encodeURIComponent('${baseUrl}' +  'demo/'+item));
+}
 $(function(){
 	var paper_flag = "${student.paper_flag}"
 	if(paper_flag == 0){
@@ -144,10 +146,24 @@ $(function(){
 	    <c:forEach var="paper" items="${papers}">
 	    
 	    <table border="1" cellspacing="0" cellpadding="0"width="100%" height="100%">
+
+            <script type="text/javascript">
+
+                    $("#${paper.uu_file_name}").click(function () {
+                        alert(12)
+                    })
+                    <%--prop("href","${baseUrl}onlinePreview?url="--%>
+                    <%--+ encodeURIComponent('${baseUrl}' + '${paper.uu_file_name}' ));--%>
+
+            </script>
 	    
-	    
-	    
-	    	<tr align="center"><td width="10%">论文内容</td><td colspan="3">${paper.paper_content }</td></tr>
+	    	<tr align="center">
+                <td width="10%">文件名</td>
+                <td  width="40%">${paper.file_name}</td>
+                <td width="10%">操作</td><td>
+                <a class='btn btn-default' target='_blank' onclick="goPreview( '${paper.uu_file_name}');" >预览</a>
+
+                <%--<a class='btn btn-default' target='_blank' onclick="location.href=${baseUrl}onlinePreview?url= encodeURIComponent('${baseUrl}${paper.uu_file_name}')">预览</a></td></tr>--%>
 	    	<c:if test="${paper.paper_status !=  2}">
 	    	
 	    	<tr align="center"><td width="10%">老师评语</td><td td colspan="3">${paper.comment}</td></tr>
@@ -162,8 +178,9 @@ $(function(){
 	    			<c:if test="${paper.paper_status ==  2}">待审批</c:if>
                     <c:if test="${paper.paper_status ==  3}"><p style="font-size: 20px;color: red">基本合格</p></c:if>
 	    		</td>
-	    		<td width="10%">操作</td>
+	    		<td width="10%">上传时间</td>
 	    		<td width="40%">
+                    ${paper.posted_time}
 	    		</td>
 	    	</tr>
 	    </table>

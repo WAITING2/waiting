@@ -23,7 +23,7 @@ spring:
             driver-class-name: com.mysql.jdbc.Driver
             url: jdbc:mysql://localhost:3306/paper_manager?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
             username: root
-            password: root
+            password: 123456
             initialPoolSize: 15
             minPoolSize: 15
             #连接池中保留的最大连接数。Default: 15
@@ -59,3 +59,17 @@ logging:
         com.netflix: info
         org.springframework.boot: info
     file: /logs/c3p0jpa.log
+
+#最大连接数
+http:
+    maxTotal: 100
+#并发数
+    defaultMaxPerRoute: 20
+#创建连接的最长时间
+    connectTimeout: 1000
+#从连接池中获取到连接的最长时间
+    connectionRequestTimeout: 500
+#数据传输的最长时间
+    socketTimeout: 10000
+#提交请求前测试连接是否可用
+    staleConnectionCheckEnabled: true

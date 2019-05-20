@@ -43,8 +43,8 @@ public class UploadController {
                 file = null;  
             }else{
 
-                wordService.word2pdf(
-                        "C:\\Users\\admin\\Documents\\Tencent Files\\1590184\\FileRecv\\《医疗管理系统》需求 分析.docx","D:/test2222.pdf");
+//                wordService.word2pdf(
+//                        "D:\\2019毕设\\关于进行2018届毕业设计（论文）答辩有关事宜的通知 (1).docx","D:/test2222.pdf");
 
 
                 InputStream ins = file.getInputStream();

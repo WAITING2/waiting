@@ -71,7 +71,7 @@ public class InstructorController {
 		String fileName ="paperList"+"-"+DateUtils.formatDateTime(new Date());
 		response.setHeader("Content-disposition", "attachment; filename="
 				+ fileName + ".xlsx");// 组装附件名称和格式
-		String[] titles = { "选题","	学生","专业", "班级","老师",	"论文状态"};
+		String[] titles = { "毕业设计（论文）题目","学号","姓名","专业", "班级","指导老师",	"论文状态"};
 		Workbook workBook=instructorService.exportExcle(paperVo, titles, outputStream);
 		workBook.write(outputStream);
 		outputStream.flush();

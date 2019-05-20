@@ -23,7 +23,7 @@ spring:
             driver-class-name: com.mysql.jdbc.Driver
             url: jdbc:mysql://localhost:3306/paper_manager?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
             username: root
-            password: 123456
+            password: root
             initialPoolSize: 15
             minPoolSize: 15
             #连接池中保留的最大连接数。Default: 15

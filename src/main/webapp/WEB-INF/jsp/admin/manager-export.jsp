@@ -96,17 +96,19 @@
 
         <table class="table">
             <tr>
-                <th>题目</th>
-                <th>学生姓名</th>
-                <th>专业名称</th>
+                <th>毕业设计（论文）题目</th>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>专业</th>
                 <th>班级</th>
-                <th>老师姓名</th>
+                <th>第一导师</th>
                 <th>论文提交时间</th>
                 <th>论文状态</th>
             </tr>
             <c:forEach items="${papers}" var="item">
                 <tr>
                     <td>${item.topic}</td>
+                    <td>${item.studentNumber}</td>
                     <td>${item.studentName}</td>
                     <td>${item.department}</td>
                     <td>${item.className}</td>

@@ -6,8 +6,10 @@ public class PaperVO {
 	private Integer id;
 	private String topic;
 	private String studentName;
+	private String studentNumber;
 	private String teacherName;
 	private Integer paperStatus;
+	private Integer paperGrade;
 	private String department;
 	private String className;
 	private Date posted_time;
@@ -29,6 +31,19 @@ public class PaperVO {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
+	public String getStudentNumber() {
+		return studentNumber;
+	}
+	public void setStudentNumber(String studentNumber) {
+		this.studentNumber = studentNumber;
+	}
+	public Integer getPaperGrade() {
+		return paperGrade;
+	}
+	public void setPaperGrade(Integer paperGrade) {
+		this.paperGrade = paperGrade;
+	}
+
 	public String getTeacherName() {
 		return teacherName;
 	}

@@ -58,7 +58,7 @@ public class InstructorServiceImpl implements InstructorService{
 		CellStyle style = ExportExcelUtil.createTitleStyle(workbook);
 		if (paperVoList!= null&&paperVoList.size()>0) {
 			Row row0 = sheet.createRow(0);// 建立新行
-			ExportExcelUtil.createCell(row0, 0, style, Cell.CELL_TYPE_STRING,"2019届毕业设计（论文）题目汇总一览表");
+			ExportExcelUtil.createCell(row0, 0, style, Cell.CELL_TYPE_STRING," 2019届毕业设计（论文）情况汇总一览表");
 
 			CellStyle style1 = ExportExcelUtil.createTitleStyle(workbook);
 
@@ -84,10 +84,11 @@ public class InstructorServiceImpl implements InstructorService{
 				Row row1 = sheet.createRow(j + 2);// 建立新行
 //				"选题","	学生","	院系",	班级",	"老师",	"论文状态"
 				ExportExcelUtil.createCell(row1, 0, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getTopic()) ? paperVO.getTopic():"");
-				ExportExcelUtil.createCell(row1, 1, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getStudentName()) ? paperVO.getStudentName():"");
-				ExportExcelUtil.createCell(row1, 2, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getDepartment())?paperVO.getDepartment():"");
-				ExportExcelUtil.createCell(row1, 3, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getClassName())?paperVO.getClassName():"");
-				ExportExcelUtil.createCell(row1, 4, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getTeacherName())?paperVO.getTeacherName():"");
+				ExportExcelUtil.createCell(row1, 1, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getStudentNumber()) ? paperVO.getStudentNumber():"");
+                ExportExcelUtil.createCell(row1, 2, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getStudentName()) ? paperVO.getStudentName():"");
+				ExportExcelUtil.createCell(row1, 3, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getDepartment())?paperVO.getDepartment():"");
+				ExportExcelUtil.createCell(row1, 4, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getClassName())?paperVO.getClassName():"");
+				ExportExcelUtil.createCell(row1, 5, style1,Cell.CELL_TYPE_STRING,StringUtils.isNoneBlank(paperVO.getTeacherName())?paperVO.getTeacherName():"");
 				String state_txt = "";
 				Integer paper_status = paperVO.getPaperStatus();
 				if(paper_status == 0){
@@ -100,7 +101,7 @@ public class InstructorServiceImpl implements InstructorService{
 				else if(paper_status == 3){
 					state_txt = "基本合格";
 				}
-				ExportExcelUtil.createCell(row1, 5, style1,Cell.CELL_TYPE_STRING,state_txt);
+				ExportExcelUtil.createCell(row1, 6, style1,Cell.CELL_TYPE_STRING,state_txt);
 			}
 
 			CellStyle style2 = workbook.createCellStyle();

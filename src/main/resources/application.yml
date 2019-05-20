@@ -8,6 +8,8 @@ server:
     #最大线程数
     tomcat:
         max-threads: 1000
+        #springboot启动c3p0找包异常
+        additional-tld-skip-patterns: mchange-commons-java*.jar
     jsp-servlet:
         init-parameters:
             development: true

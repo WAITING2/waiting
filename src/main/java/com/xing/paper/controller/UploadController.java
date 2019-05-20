@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.xing.paper.service.WordService;
 import com.xing.paper.utils.UUIDTool;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,9 +39,6 @@ public class UploadController {
     	File f = null; //生成一个file
         File pdf_f = null;
 		try {
-            if(file.equals("")||file.getSize()<=0){  
-                file = null;  
-            }else{
             if(file.equals("")||file.getSize()<=0){
 
                 System.out.print("上传文件为空...");
@@ -65,8 +61,15 @@ public class UploadController {
 
                     pdf_f = new File("pdf_f.pdf");
 
-                    wordService.word2pdf(
-                            f.getPath(),pdf_f.getPath());
+                    try {
+                        wordService.word2pdf(
+                                f.getPath(),pdf_f.getPath());
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                    }
+
                 }
 
 
@@ -103,6 +106,7 @@ public class UploadController {
 			e.printStackTrace();
 
 		} finally {
+
 			if(null != f){
 			    File del = new File(f.toURI());
 			    del.delete();
@@ -112,6 +116,7 @@ public class UploadController {
                 File del = new File(pdf_f.toURI());
                 del.delete();
             }
+
 		}
         return ResponseReslut.SUCCESS;
     }

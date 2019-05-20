@@ -8,6 +8,9 @@ server:
     #最大线程数
     tomcat:
         max-threads: 1000
+    jsp-servlet:
+        init-parameters:
+            development: true
 spring:
     mvc:
         view:

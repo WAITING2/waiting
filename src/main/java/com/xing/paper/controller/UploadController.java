@@ -38,28 +38,45 @@ public class UploadController {
     public ResponseReslut uploadPaper(HttpServletRequest request,
     	@RequestParam("paper_file") MultipartFile file,MultipartHttpServletRequest mulRequest,String teacherNumber,String studentNumber){
     	File f = null; //生成一个file
+        File pdf_f = null;
 		try {
             if(file.equals("")||file.getSize()<=0){  
                 file = null;  
             }else{
+            if(file.equals("")||file.getSize()<=0){
 
-//                wordService.word2pdf(
-//                        "D:\\2019毕设\\关于进行2018届毕业设计（论文）答辩有关事宜的通知 (1).docx","D:/test2222.pdf");
+                System.out.print("上传文件为空...");
 
+            }else{
 
                 InputStream ins = file.getInputStream();
 
                 String uuid = UUIDTool.getUUID();
 
-                String name = file.getName();
-
                 String originalFilename = file.getOriginalFilename();
 
                 String[] split = originalFilename.split("\\.");
 
-                f=new File(uuid +"."+ split[1]);
+                f = new File(uuid +"."+ split[1]);
 
                 FileUtils.inputStreamToFile(ins, f);
+
+                if(file.getName().endsWith(".dox") || file.getName().endsWith(".doxc")){
+
+                    pdf_f = new File("pdf_f.pdf");
+
+                    wordService.word2pdf(
+                            f.getPath(),pdf_f.getPath());
+                }
+
+
+                if(null != pdf_f){
+                    File del = new File(f.toURI());
+
+                    del.delete();
+
+                    f = pdf_f;
+                }
 
 //                String content = FileUtils.reaFile(f);//文件中的内容
 
@@ -82,15 +99,97 @@ public class UploadController {
                 studentService.savePaper(paper,f);
             }  
 		} catch (Exception e) {
+
 			e.printStackTrace();
+
 		} finally {
 			if(null != f){
-			    File del = new File(f.toURI());  
-			    del.delete();  
+			    File del = new File(f.toURI());
+			    del.delete();
 			}
+
+			if(null != pdf_f){
+                File del = new File(pdf_f.toURI());
+                del.delete();
+            }
 		}
         return ResponseReslut.SUCCESS;
     }
+
+
+    @RequestMapping("/teacher/uploadPaper")
+    @ResponseBody
+    public ResponseReslut uploadPaper2(HttpServletRequest request,
+                                      @RequestParam("paper_file") MultipartFile file,MultipartHttpServletRequest mulRequest,PaperPO po){
+
+        if(null == po.getId()){
+            return ResponseReslut.FAILD;
+        }
+
+        File f = null; //生成一个file
+        File pdf_f = null;
+        try {
+            if(file.equals("")||file.getSize()<=0){
+
+                System.out.print("上传文件为空...");
+
+            }else{
+
+                InputStream ins = file.getInputStream();
+
+                String uuid = UUIDTool.getUUID();
+
+                String originalFilename = file.getOriginalFilename();
+
+                String[] split = originalFilename.split("\\.");
+
+                f = new File(uuid +"."+ split[1]);
+
+                FileUtils.inputStreamToFile(ins, f);
+
+                if(file.getName().endsWith(".dox") || file.getName().endsWith(".doxc")){
+
+                    pdf_f = new File("pdf_f.pdf");
+
+                    wordService.word2pdf(
+                            f.getPath(),pdf_f.getPath());
+                }
+
+
+                if(null != pdf_f){
+                    File del = new File(f.toURI());
+
+                    del.delete();
+
+                    f = pdf_f;
+                }
+
+                po.setUu_t_reply_name(uuid +"."+ split[1]);
+
+                po.setT_reply_name(file.getOriginalFilename());
+
+                studentService.savePaper(po,f);
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+            if(null != f){
+                File del = new File(f.toURI());
+                del.delete();
+            }
+
+            if(null != pdf_f){
+                File del = new File(pdf_f.toURI());
+                del.delete();
+            }
+        }
+        return ResponseReslut.SUCCESS;
+    }
+
+
+
 
     public static void main(String[] args) {
 

@@ -9,15 +9,17 @@ import com.xing.paper.vo.PaperVO;
 
 public interface StudentService {
 	
-	public void addStudent(StudentPo student);
-	public void deleteStudent(StudentPo student);
-	public void updateStudent(StudentPo student);
-	public List<StudentPo> getAllStudent();
-	public StudentPo getStudentByNumber(String studentNumber);
-	public boolean comfirmLogin(String username,String password);
-	public void savePaper(PaperPO paper, File file)throws Exception;
-	public List<PaperPO> getPaperByStudentNumber(String studentNumber, Integer paperId);
-	public void updatePaper(PaperPO po, StudentPo studentPo);
-	public List<PaperPO> getFailPaperByStudentNumber(String studentNumber);
-	public List<PaperVO> getAllPaperInfoByStudentName(String studentName, String teacherName, String departId, Integer classId);
+	void addStudent(StudentPo student);
+	void deleteStudent(StudentPo student);
+	void updateStudent(StudentPo student);
+	List<StudentPo> getAllStudent();
+	StudentPo getStudentByNumber(String studentNumber);
+	boolean comfirmLogin(String username,String password);
+	void savePaper(PaperPO paper, File file)throws Exception;
+	List<PaperPO> getPaperByStudentNumber(String studentNumber, Integer paperId);
+	void updatePaper(PaperPO po, StudentPo studentPo);
+	List<PaperPO> getFailPaperByStudentNumber(String studentNumber);
+	List<PaperVO> getAllPaperInfoByStudentName(String studentName, String teacherName, String departId, Integer classId);
+
+    PaperPO getPaperById(Integer paper_id);
 }

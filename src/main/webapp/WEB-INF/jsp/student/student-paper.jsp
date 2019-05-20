@@ -34,14 +34,13 @@ function doUpload() {
 		dataType : 'multipart/form-data',
         async: true,  
         success: function (data) {
-
-	       	if(data.indexOf('true')){
-	       		
-	    		alert("上传成功")
+            var data = $.parseJSON( data.replace(/<.*?>/ig,""))
+	       	if(data.success){
+                alert(data.reslut);
 	       		location.reload()
 	       	}else{
 	       		
-	       		alert("上传失败")
+	       		alert(data.reslut)
 	       		
 	       	}
         },  
@@ -162,7 +161,9 @@ $(function(){
                 <td  width="40%">${paper.file_name}</td>
                 <td width="10%">操作</td><td>
                 <a class='btn btn-default' target='_blank' onclick="goPreview( '${paper.uu_file_name}');" >预览</a>
-
+                <c:if test="${paper.t_reply_name !=null}">
+                    <a class='btn btn-default' target='_blank' onclick="goPreview( '${paper.uu_t_reply_name}');" >老师回复预览</a>
+                </c:if>
                 <%--<a class='btn btn-default' target='_blank' onclick="location.href=${baseUrl}onlinePreview?url= encodeURIComponent('${baseUrl}${paper.uu_file_name}')">预览</a></td></tr>--%>
 	    	<c:if test="${paper.paper_status !=  2}">
 	    	

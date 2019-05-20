@@ -16,6 +16,8 @@ public class PaperPO {
 	private Date posted_time;
 	private String file_name;//文件名称
 	private String uu_file_name;//uuid值
+	private String t_reply_name;//老湿回复文件名
+	private String uu_t_reply_name;//老师回复文件uuid值
 	public Integer getId() {
 		return id;
 	}
@@ -93,5 +95,21 @@ public class PaperPO {
 
 	public void setUu_file_name(String uu_file_name) {
 		this.uu_file_name = uu_file_name;
+	}
+
+	public String getT_reply_name() {
+		return t_reply_name;
+	}
+
+	public void setT_reply_name(String t_reply_name) {
+		this.t_reply_name = t_reply_name;
+	}
+
+	public String getUu_t_reply_name() {
+		return uu_t_reply_name;
+	}
+
+	public void setUu_t_reply_name(String uu_t_reply_name) {
+		this.uu_t_reply_name = uu_t_reply_name;
 	}
 }

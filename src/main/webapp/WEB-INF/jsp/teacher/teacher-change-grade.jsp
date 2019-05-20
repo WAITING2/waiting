@@ -18,6 +18,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/res/ueditor/ueditor.all.js"></script>
 <!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
 <script type="text/javascript" src="${pageContext.request.contextPath }/res/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/res/js/ajaxfileupload.js"></script>
 <style>
   body{
     font-family: "Microsoft Yahei";
@@ -77,40 +78,103 @@
     <p>欢迎使用学位论文提交系统</p>
   </div>
 </div>
-<div class="container">
+
+  <div class="container">
+    <script>
+        function goPreview(item) {
+            window.open( '${baseUrl}onlinePreview?url='+encodeURIComponent('${baseUrl}' +  'demo/'+item));
+        }
+
+        function doReview(src) {
+
+           var _tab =  $(src).closest('table');
+
+            console.debug(_tab);
+
+           var _paper_status =  _tab.find(".paper_status");
+
+
+           if(!_paper_status.val()){
+               alert("请选择论文结果");
+               return
+           }
+
+            var _comment =  _tab.find(".comment");
+
+           if(!_comment.val()){
+               alert("请对学生论文进行审批");
+               _comment.focus()
+               return
+           }
+
+            var name  = document.getElementById("paper_file").value;
+
+            if(!(/.(doc)$/.test(name) || /.(docx)$/.test(name) || /.(pdf)$/.test(name))){
+                alert("请选择正确的doc,docx,pdf文件 (仅支持.doc,.docx,.pdf格式)!");
+                return false;
+            }
+
+           var _p_id =  _tab.find(".p_id");
+
+            var url = "${pageContext.request.contextPath }/teacher/uploadPaper" +
+            "?id="+_p_id.val()+"&comment="+_comment.val()+"&paper_status="+_paper_status.val();
+            $.ajaxFileUpload({
+                url: url ,
+                secureuri : false,
+                type: 'POST',
+                fileElementId : 'paper_file',
+                dataType : 'multipart/form-data',
+                async: true,
+                success: function (data) {
+                    var data = $.parseJSON( data.replace(/<.*?>/ig,""))
+                    if(data.success){
+                        alert(data.reslut)
+                        location.reload()
+                    }else{
+
+                        alert(data.reslut)
+
+                    }
+                },
+                error: function (returndata) {
+                    alert(returndata);
+                }
+            });
+        }
+    </script>
   <section>
     <p align="center" style="font-size: 30px">论文信息<p>
     <c:if test="${papers!= null && fn:length(papers) > 0}">
     	
 	    <c:forEach var="paper" items="${papers}">
 	    
-	    <table border="1" cellspacing="0" cellpadding="0"width="100%" height="100%">
-	    
-	    
-	    
-	    	<tr align="center"><td width="10%">论文内容</td><td colspan="3">${paper.paper_content }</td></tr>
-	    	<c:if test="${paper.paper_status !=  2}">
-	    	
-	    	<tr align="center"><td width="10%">老师评语</td><td td colspan="3">${paper.comment}</td></tr>
-	    	
-	    	</c:if>
-	    	<tr style="colspan" align="center">
-	    		<td width="10%">论文状态</td>
-	    		<td width="40%">
-	    			<c:if test="${paper.paper_status ==  0}"><p style="font-size: 20px;color: green">合格</p></c:if>
-                    <%--<c:if test="${paper.paper_status ==  1}"><p style="font-size: 20px;color: red">不合格</p></c:if>--%>
-	    			<c:if test="${paper.paper_status ==  1}"><p style="font-size: 20px;color: red">不合格</p></c:if>
-	    			<c:if test="${paper.paper_status ==  2}">待审批</c:if>
-	    		</td>
-	    		<td width="10%">操作</td>
-	    		<td width="40%">
-		    		<c:if test="${paper.paper_status ==  2}">
-		    		<a  class="small blue button" href="${pageContext.request.contextPath }/teacher/approve?id=${paper.id}" >审批</a>
-		    		</c:if>
-	    		</td>
-	    	</tr>
-	    </table>
-	      <HR style="border:3 double #987cb9" width="80%" color=#987cb9 SIZE=3>
+	    <%--<table border="1" cellspacing="0" cellpadding="0"width="100%" height="100%">--%>
+	    <%----%>
+	    <%----%>
+	    <%----%>
+	    	<%--<tr align="center"><td width="10%">论文内容</td><td colspan="3">${paper.paper_content }</td></tr>--%>
+	    	<%--<c:if test="${paper.paper_status !=  2}">--%>
+	    	<%----%>
+	    	<%--<tr align="center"><td width="10%">老师评语</td><td td colspan="3">${paper.comment}</td></tr>--%>
+	    	<%----%>
+	    	<%--</c:if>--%>
+	    	<%--<tr style="colspan" align="center">--%>
+	    		<%--<td width="10%">论文状态</td>--%>
+	    		<%--<td width="40%">--%>
+	    			<%--<c:if test="${paper.paper_status ==  0}"><p style="font-size: 20px;color: green">合格</p></c:if>--%>
+                    <%--<c:if test="${paper.paper_status ==  3}"><p style="font-size: 20px;color: red">基本合格</p></c:if>--%>
+	    			<%--<c:if test="${paper.paper_status ==  1}"><p style="font-size: 20px;color: red">不合格</p></c:if>--%>
+	    			<%--<c:if test="${paper.paper_status ==  2}">待审批</c:if>--%>
+	    		<%--</td>--%>
+	    		<%--<td width="10%">操作</td>--%>
+	    		<%--<td width="40%">--%>
+		    		<%--<c:if test="${paper.paper_status ==  2}">--%>
+		    		<%--<a  class="small blue button" href="${pageContext.request.contextPath }/teacher/approve?id=${paper.id}" >审批</a>--%>
+		    		<%--</c:if>--%>
+	    		<%--</td>--%>
+	    	<%--</tr>--%>
+	    <%--</table>--%>
+	      <div style="height: 50px"></div>
 	    </c:forEach>
     </c:if>
     <c:if test="${papers== null || fn:length(papers) == 0}">
@@ -118,8 +182,62 @@
     	<div><font color="red">暂无论文信息...</font></div>
     
     </c:if>
-    
-      <h4>选题题目成绩</h4>
+
+<c:if test="${papers!= null && fn:length(papers) > 0}">
+    <c:forEach var="paper" items="${papers}">
+       <form>
+      <table class="table">
+          <input type="hidden" class="p_id" value="${paper.id}">
+          <tr><p style="font-size: 20px;color: #0C0C22">${paper.posted_time}上传的论文详情~</p></tr>
+          <tr><td>论文结果</td>
+                <td>
+                    <%--<c:if test="${paper.paper_status ==  0}"><p style="font-size: 20px;color: green">合格</p></c:if>--%>
+                    <%--<c:if test="${paper.paper_status ==  3}"><p style="font-size: 20px;color: red">基本合格</p></c:if>--%>
+                    <%--<c:if test="${paper.paper_status ==  1}"><p style="font-size: 20px;color: red">不合格</p></c:if>--%>
+                    <%--<c:if test="${paper.paper_status ==  2}">待审批</c:if>--%>
+                    <c:if test="${paper.paper_status == 2}">
+                       <select  class="paper_status"  ${paper.paper_status != 2 ? 'disabled' : ''} name="paper_status" class="form-control" >
+                           <option value="">---请选择---</option>
+                           <option value="1" ${paper.paper_status == 1 ? 'selected' : ''}>不合格</option>
+                           <option value="3" ${paper.paper_status == 3 ? 'selected' : ''}>基本合格</option>
+                           <option value="0" ${paper.paper_status == 0 ? 'selected' : ''}>合格</option>
+                       </select>
+                    </c:if>
+                    <c:if test="${paper.paper_status ==  0}"><p style="font-size: 20px;color: green">合格</p></c:if>
+                    <c:if test="${paper.paper_status ==  3}"><p style="font-size: 20px;color: red">基本合格</p></c:if>
+                    <c:if test="${paper.paper_status ==  1}"><p style="font-size: 20px;color: red">不合格</p></c:if>
+              </td>
+          </tr>
+          <tr>
+            <td>评语：</td>
+              <td>
+                  <c:if test="${paper.paper_status == 2}">
+                      <input type="text" class="comment"   name="comment" value="${paper.comment}" style="width: 100%" >
+                  </c:if>
+                  <c:if test="${paper.paper_status != 2}">
+                      ${paper.comment}
+                  </c:if>
+              </td>
+          </tr>
+          <tr><td >预览</td><td> <a class='btn btn-default' target='_blank' onclick="goPreview( '${paper.uu_file_name}');" >预览</a> </td></tr>
+          <c:if test="${paper.paper_status == 2}">
+          <tr><td>上传评审</td><td><input type="file" id="paper_file" name="paper_file"> </td></tr>
+          </c:if>
+          <c:if test="${paper.paper_status != 2}">
+            <tr><td >操作</td><td><a class='btn btn-default' target='_blank' onclick="goPreview( '${paper.uu_t_reply_name}');" >预览审批</a> </td></tr>
+          </c:if>
+
+           <c:if test="${paper.paper_status == 2}">
+            <tr><td><input type="button"  class="btn btn-success" onclick="doReview(this)" value="评审"></td></tr>
+           </c:if>
+
+      </table>
+       </form>
+    </c:forEach>
+</c:if>
+
+
+  <h4>选题题目成绩</h4>
     <table class="table">
        <tr><td class="col-md-6">课题名称</td><td class="col-md-6">${requestScope.info.topic.topic }</td></tr>
       <tr><td>学生姓名</td><td>${requestScope.info.student.studentName }</td></tr>

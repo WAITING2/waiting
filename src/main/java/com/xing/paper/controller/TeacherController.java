@@ -91,6 +91,7 @@ public class TeacherController {
 			if(papers.size()>0){
 				request.setAttribute("papers",papers);
 			}
+			request.setAttribute("baseUrl", "http://127.0.0.1:8012/");
 		}else{
 			response.sendRedirect(request.getContextPath());
 		}

@@ -64,7 +64,12 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public void savePaper(PaperPO paper, File file) throws Exception{
 		httpAPIService.doUpload("http://127.0.0.1:8012/fileUpload",file);
-		studentDao.savePaper(paper);
+		if(null == paper.getId()){
+			studentDao.savePaper(paper);
+		}else{
+			studentDao.updatePaper2(paper);
+		}
+
 	}
 
 	@Override
@@ -97,5 +102,10 @@ public class StudentServiceImpl implements StudentService{
 	public List<PaperVO> getAllPaperInfoByStudentName(String studentName, String teacherName, String departId, Integer classId) {
 		return studentDao.getAllPaperInfoByStudentName(studentName,teacherName,departId,classId);
 	}
-	
+
+	@Override
+	public PaperPO getPaperById(Integer paper_id) {
+		return studentDao.getPaperById(paper_id);
+	}
+
 }
